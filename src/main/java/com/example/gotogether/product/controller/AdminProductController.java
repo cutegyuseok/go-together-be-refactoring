@@ -32,7 +32,7 @@ public class AdminProductController {
     }
 
     @PatchMapping("/products/{productId}")
-    @ApiOperation(value = "상품 수정", notes = "상품을 수정(옵션 제외) 합니다.\n\n" + "code: 200 상품 수정 성공, code: 403 권한 없음, code: 400 해당 상품이 없음 또는 해당 타입의 유형 없음,code: 404 선택한 카테고리의 종류가 없음, code: 500 서버에러")
+    @ApiOperation(value = "상품 수정", notes = "상품을 수정(옵션 제외) 합니다.\n\n" + "code: 200 상품 수정 성공, code: 403 권한 없음, code: 400 해당 상품이 없음,code: 404 선택한 카테고리의 종류가 없음 또는 해당 타입의 유형 없음, code: 500 서버에러")
     public ResponseEntity<?> updateProducts(@PathVariable Long productId, @RequestBody ProductDTO.ProductUpdateReqDTO productUpdateReqDTO) {
         System.out.println(productUpdateReqDTO.toString());
         return productService.updateProduct(productId, productUpdateReqDTO);
