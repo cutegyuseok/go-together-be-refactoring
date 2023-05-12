@@ -50,8 +50,10 @@ public class ProductController {
                                                     @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
                                                     @RequestParam(required = false, defaultValue = "0") int people) {
         LocalDate date = null;
+        LocalDate endDate = null;
         try {
             date = LocalDate.parse(dateOption).minusDays(1);
+            endDate = LocalDate.parse(endDateOption).plusDays(1);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
