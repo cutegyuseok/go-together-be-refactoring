@@ -152,13 +152,13 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<?> findProductByCategory(Long categoryId, int page, String sort,LocalDate localDate,int people) {
+    public ResponseEntity<?> findProductByCategory(Long categoryId, int page, String sort,LocalDate startDate,LocalDate endDate,int people) {
         try {
             if (page < 1) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             PageRequest pageable = PageRequest.of(page - 1, Product_List_By_Category);
             //카테고리 검색
             Category category = categoryRepository.findById(categoryId).orElseThrow(IllegalArgumentException::new);
-            Page<Product> products = productRepository.searchByCategories(pageable,listOfCategory(category),sort,localDate,people);
+            Page<Product> products = productRepository.searchByCategories(pageable,listOfCategory(category),sort,startDate,endDate,people);
             PageResponseDTO pageResponseDTO = new PageResponseDTO(products);
             pageResponseDTO.setContent(products.getContent().stream().map(ProductDTO.ProductListResDTO::new).collect(Collectors.toList()));
             if(pageResponseDTO.getContent().size()<1){
@@ -174,12 +174,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate dateOption,LocalDate endDateOption, int people) {
+    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate startDate,LocalDate endDate, int people) {
         try {
             if (page < 1) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             PageRequest pageable = PageRequest.of(page - 1, Product_List_By_Keyword);
             Page<Product> productPage = productRepository
-                    .searchByKeywordAndSorting(pageable,keyword,sort, dateOption, people);
+                    .searchByKeywordAndSorting(pageable,keyword,sort, startDate,endDate, people);
             if (productPage.getTotalElements()<1){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

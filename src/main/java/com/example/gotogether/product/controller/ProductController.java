@@ -27,14 +27,17 @@ public class ProductController {
     public ResponseEntity<?> findProductByCategory(@PathVariable Long categoryId, @RequestParam(required = false, defaultValue = "1") int page,
                                                    @RequestParam(required = false,defaultValue = "recent") String sort,
                                                    @RequestParam(required = false,defaultValue = "1999-08-31") String dateOption,
+                                                   @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
                                                    @RequestParam(required = false,defaultValue = "0") int people) {
-        LocalDate date = null;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
         try {
-            date = LocalDate.parse(dateOption).minusDays(1);
+            startDate = LocalDate.parse(dateOption).minusDays(1);
+            endDate = LocalDate.parse(endDateOption).plusDays(1);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return productService.findProductByCategory(categoryId, page,sort,date,people);
+        return productService.findProductByCategory(categoryId, page,sort,startDate,endDate,people);
     }
 
     @GetMapping("/search")
@@ -49,15 +52,15 @@ public class ProductController {
                                                     @RequestParam(required = false, defaultValue = "1999-08-31") String dateOption,
                                                     @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
                                                     @RequestParam(required = false, defaultValue = "0") int people) {
-        LocalDate date = null;
+        LocalDate startDate = null;
         LocalDate endDate = null;
         try {
-            date = LocalDate.parse(dateOption).minusDays(1);
+            startDate = LocalDate.parse(dateOption).minusDays(1);
             endDate = LocalDate.parse(endDateOption).plusDays(1);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return productService.findProductByKeyword(keyword, page, sort, date, endDate,people);
+        return productService.findProductByKeyword(keyword, page, sort, startDate, endDate,people);
     }
 
     @GetMapping("/detail/{productId}")

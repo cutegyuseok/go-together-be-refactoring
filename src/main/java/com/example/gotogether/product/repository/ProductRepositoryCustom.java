@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ProductRepositoryCustom {
-    Page<Product> searchByKeywordAndSorting(Pageable pageable, String keyword, String sort, LocalDate localDate, int people);
+    Page<Product> searchByKeywordAndSorting(Pageable pageable, String keyword, String sort, LocalDate startDate, LocalDate endDate, int people);
 
     List<Product> findPopular(List<Category> categoryList);
 
-    Page<Product> searchByCategories(Pageable pageable ,List<Category> categoryList, String sort,LocalDate localDate,int people);
+    Page<Product> searchByCategories(Pageable pageable ,List<Category> categoryList, String sort,LocalDate startDate, LocalDate endDate,int people);
 }
