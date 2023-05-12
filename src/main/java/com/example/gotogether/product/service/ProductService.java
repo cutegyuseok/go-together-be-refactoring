@@ -19,7 +19,7 @@ public interface ProductService {
 
     ResponseEntity<?> findProductByCategory(Long categoryId, int page, String sort,LocalDate localDate,int people);
 
-    ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate dateOption, int people);
+    ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate dateOption,LocalDate endDateOption, int people);
 
     ResponseEntity<?> findPopularProducts(Long categoryId);
 

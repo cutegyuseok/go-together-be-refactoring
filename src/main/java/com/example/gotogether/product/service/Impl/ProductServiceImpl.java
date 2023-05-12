@@ -174,7 +174,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate dateOption, int people) {
+    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate dateOption,LocalDate endDateOption, int people) {
         try {
             if (page < 1) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             PageRequest pageable = PageRequest.of(page - 1, Product_List_By_Keyword);
