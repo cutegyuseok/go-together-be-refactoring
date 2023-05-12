@@ -32,7 +32,7 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public Page<Product> searchByKeywordAndSorting(Pageable pageable, String keyword, String sort, LocalDate localDate, int people) {
+    public Page<Product> searchByKeywordAndSorting(Pageable pageable, String keyword, String sort, LocalDate localDate, LocalDate endDate, int people) {
         JPQLQuery<Product> query = queryFactory.selectFrom(product)
                 .leftJoin(product.productOptions, productOption)
                 .groupBy(product.productId)
@@ -64,7 +64,7 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
                 .leftJoin(product.categories,productCategory)
                 .leftJoin(product.productOptions,productOption)
                 .groupBy(product.productId)
-                .where(containCategory(categoryList),isAvailableProduct(),isStartDateAfter(localDate,people))
+                .where(containCategory(categoryList),isAvailableProduct(),isStartDateAfter(localDate),isAvailablePeople(people))
                 .orderBy(sort(sort));
         List<Product> productList = this.getQuerydsl().applyPagination(pageable,query).fetch();
         return new PageImpl<Product>(productList,pageable,query.fetchCount());
@@ -131,6 +131,10 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
     private BooleanExpression isStartDateAfter(LocalDate localDate) {
 
         return productOption.startDate.after(localDate);
+    }
+
+    private BooleanExpression isEndDateBefore(LocalDate localDate) {
+        return productOption.endDate.before(localDate);
     }
 
     private BooleanExpression isAvailablePeople(int people) {
