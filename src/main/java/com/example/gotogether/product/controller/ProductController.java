@@ -57,7 +57,7 @@ public class ProductController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return productService.findProductByKeyword(keyword, page, sort, date, people);
+        return productService.findProductByKeyword(keyword, page, sort, date, endDate,people);
     }
 
     @GetMapping("/detail/{productId}")
