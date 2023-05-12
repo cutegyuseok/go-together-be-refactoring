@@ -47,6 +47,7 @@ public class ProductController {
                                                     @RequestParam(required = false, defaultValue = "recent") String sort,
                                                     @RequestParam(required = false, defaultValue = "1") int page,
                                                     @RequestParam(required = false, defaultValue = "1999-08-31") String dateOption,
+                                                    @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
                                                     @RequestParam(required = false, defaultValue = "0") int people) {
         LocalDate date = null;
         try {
