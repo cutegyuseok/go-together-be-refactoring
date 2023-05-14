@@ -31,15 +31,7 @@ public class ProductController {
                                                    @RequestParam(required = false) String dateOption,
                                                    @RequestParam(required = false) String endDateOption,
                                                    @RequestParam(required = false,defaultValue = "0") int people) {
-        LocalDate startDate = null;
-        LocalDate endDate = null;
-        try {
-            startDate = LocalDate.parse(dateOption).minusDays(1);
-            endDate = LocalDate.parse(endDateOption).plusDays(1);
-        }catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return productService.findProductByCategory(categoryId, page,sort,startDate,endDate,people);
+        return productService.findProductByCategory(categoryId, page,sort,dateOption,endDateOption,people);
     }
 
     @GetMapping("/search")
@@ -55,15 +47,7 @@ public class ProductController {
                                                     @RequestParam(required = false) String dateOption,
                                                     @RequestParam(required = false) String endDateOption,
                                                     @RequestParam(required = false, defaultValue = "0") int people) {
-        LocalDate startDate = null;
-        LocalDate endDate = null;
-        try {
-            startDate = LocalDate.parse(dateOption).minusDays(1);
-            endDate = LocalDate.parse(endDateOption).plusDays(1);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return productService.findProductByKeyword(keyword, page, sort, startDate, endDate,people);
+        return productService.findProductByKeyword(keyword, page, sort, dateOption, endDateOption,people);
     }
 
     @GetMapping("/detail/{productId}")
