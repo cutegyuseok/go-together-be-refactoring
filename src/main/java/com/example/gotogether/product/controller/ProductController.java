@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 @Api(tags = {"상품 서비스"}, description = "상품 키워드 검색, 카테고리로 상품 검색)")
 @RestController
@@ -27,8 +28,8 @@ public class ProductController {
             "code: 200 상품 목록 조회 성공, 204 표시할 상품 없음, 400 잘못된 페이지 사이즈 요청 또는 잘못된 날짜 입력, 404 해당 카테고리가 존재하지 않음. 500 서버에러 ")
     public ResponseEntity<?> findProductByCategory(@PathVariable Long categoryId, @RequestParam(required = false, defaultValue = "1") int page,
                                                    @RequestParam(required = false,defaultValue = "recent") String sort,
-                                                   @RequestParam(required = false,defaultValue = "1999-08-31") String dateOption,
-                                                   @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
+                                                   @RequestParam(required = false) String dateOption,
+                                                   @RequestParam(required = false) String endDateOption,
                                                    @RequestParam(required = false,defaultValue = "0") int people) {
         LocalDate startDate = null;
         LocalDate endDate = null;
@@ -51,8 +52,8 @@ public class ProductController {
     public ResponseEntity<?> searchProductByKeyword(@RequestParam(required = true) String keyword,
                                                     @RequestParam(required = false, defaultValue = "recent") String sort,
                                                     @RequestParam(required = false, defaultValue = "1") int page,
-                                                    @RequestParam(required = false, defaultValue = "1999-08-31") String dateOption,
-                                                    @RequestParam(required = false, defaultValue = "2999-12-25") String endDateOption,
+                                                    @RequestParam(required = false) String dateOption,
+                                                    @RequestParam(required = false) String endDateOption,
                                                     @RequestParam(required = false, defaultValue = "0") int people) {
         LocalDate startDate = null;
         LocalDate endDate = null;
