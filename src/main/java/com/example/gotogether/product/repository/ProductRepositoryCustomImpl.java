@@ -129,11 +129,16 @@ public class ProductRepositoryCustomImpl extends QuerydslRepositorySupport imple
     }
 
     private BooleanExpression isStartDateAfter(LocalDate startDate) {
-
+        if (startDate==null){
+            return null;
+        }
         return productOption.startDate.after(startDate);
     }
 
     private BooleanExpression isEndDateBefore(LocalDate endDate) {
+        if (endDate==null){
+            return null;
+        }
         return productOption.endDate.before(endDate);
     }
 
