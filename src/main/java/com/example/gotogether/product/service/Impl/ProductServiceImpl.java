@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -152,7 +153,23 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ResponseEntity<?> findProductByCategory(Long categoryId, int page, String sort,LocalDate startDate,LocalDate endDate,int people) {
+    public ResponseEntity<?> findProductByCategory(Long categoryId, int page, String sort,String dateOption,String endDateOption,int people) {
+        LocalDate startDate;
+        LocalDate endDate;
+        try {
+            if (dateOption!=null) {
+                startDate = LocalDate.parse(dateOption).minusDays(1);
+            }else {
+                startDate = null;
+            }
+            if (endDateOption!=null){
+                endDate = LocalDate.parse(endDateOption).plusDays(1);
+            }else {
+                endDate = null;
+            }
+        }catch (DateTimeParseException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             if (page < 1) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             PageRequest pageable = PageRequest.of(page - 1, Product_List_By_Category);
@@ -174,7 +191,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, LocalDate startDate,LocalDate endDate, int people) {
+    public ResponseEntity<?> findProductByKeyword(String keyword, int page, String sort, String dateOption,String endDateOption, int people) {
+        LocalDate startDate;
+        LocalDate endDate;
+        try {
+            if (dateOption!=null) {
+                startDate = LocalDate.parse(dateOption).minusDays(1);
+            }else {
+                startDate = null;
+            }
+            if (endDateOption!=null){
+                endDate = LocalDate.parse(endDateOption).plusDays(1);
+            }else {
+                endDate = null;
+            }
+        }catch (DateTimeParseException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         try {
             if (page < 1) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             PageRequest pageable = PageRequest.of(page - 1, Product_List_By_Keyword);
