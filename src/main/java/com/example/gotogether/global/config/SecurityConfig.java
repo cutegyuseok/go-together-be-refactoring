@@ -48,7 +48,7 @@ public class SecurityConfig {
     };
 
 
-    @Bean //회원 insert 서비스에서 비밀번호 암호화/복호화에 사용됨
+    @Bean
     public PasswordEncoder passwordEncoderParser() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
@@ -57,18 +57,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         return http
-                .cors() // cors 관련 추가
+                .cors()
                 .and()
                 .authorizeRequests()
                 .mvcMatchers(PUBLIC_URLS).permitAll()
                 .and()
                 .authorizeRequests()
-                .mvcMatchers(ADMIN_URLS).hasRole("ADMIN")// Admin 권한만 접근 가능
+                .mvcMatchers(ADMIN_URLS).hasRole("ADMIN")
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())//권한 에러 처리
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
                 .and()
                 .csrf().disable()
                 .httpBasic().disable()
